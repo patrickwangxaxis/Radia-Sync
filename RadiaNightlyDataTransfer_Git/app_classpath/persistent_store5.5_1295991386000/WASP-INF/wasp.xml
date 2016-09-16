@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    name="[system][http://systinet.com/wasp/persistent_store][persistent_store]"
+    xmlns:db_interface="http://systinet.com/wasp/app/db_interface">
+    <classSpace name="[system][http://systinet.com/wasp/persistent_store][persistent_store]">
+
+        <parentClassSpace>[system][http://systinet.com/wasp/app/db_interface][db_interface]</parentClassSpace>
+    </classSpace>
+    <module
+        classSpace="[system][http://systinet.com/wasp/persistent_store][persistent_store]"
+        loader="com.systinet.wasp.persistentstore.PersistentStoreModule"
+        name="[system][http://systinet.com/wasp/persistent_store][PersistentStoreModule]"/>
+</config>

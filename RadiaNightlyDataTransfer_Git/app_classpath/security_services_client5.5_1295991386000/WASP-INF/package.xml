@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="security_services_client"
+    client-package="true"
+    library="true"
+    targetNamespace="http://systinet.com/wasp/app/security_services_client"
+    xmlns:tns="http://systinet.com/wasp/app/security_services_client"
+    xmlns:admin="http://systinet.com/wsdl/org/systinet/wasp/admin/"
+    xmlns:wasp="http://systinet.com/wasp/app/builtin_serialization"
+    xmlns="http://systinet.com/wasp/package/1.3"
+    version="5.5">
+
+  <packager>
+      <name>Systinet</name>
+      <email>info@systinet.com</email>
+      <company>Systinet Corporation</company>
+      <url>http://systinet.com</url>
+  </packager>
+  <documentation url="http://www.systinet.com/doc/ssj-55/waspj/index.html">
+      <display-name>Security-Services-Client</display-name>
+      <description>Client side of the PolicyManagement and PStoreService.</description>
+  </documentation>
+  <license>http://www.systinet.com</license>
+  <location>http://systinet.com</location>
+
+  <dependency ref="wasp:builtin_serialization" version="1.0"/>
+
+  <!-- PolicyManagement processing -->
+  <processing name="PolicyManagementProcessing_Client">
+    <use ref="wasp:EncodedSerialization" />
+
+    <type-mapping name="ClientPrincipalEntriesMapping"
+                     language="java"
+                     xmlns:types="http://idoox.com/security">
+        <type name="types:PrincipalEntries" maps-to="org.systinet.security.policy.PrincipalEntries"/>
+    </type-mapping>
+
+    <serialization name="ClientPrincipalEntriesSerializer"
+                      serializer-class="com.systinet.wasp.admin.security.serialization.PrincipalEntriesSerializer"
+                      deserializer-class="com.systinet.wasp.admin.security.serialization.PrincipalEntriesDeserializer"
+                      serialized-class="org.systinet.security.policy.PrincipalEntries"
+                      serialized-type="types:PrincipalEntries"
+                      xmlns:types="http://idoox.com/security"
+                      preceding-parts="wasp:BasicConstructSerializer"
+                      following-parts="wasp:IteratorSerializer"/>
+  </processing>
+
+  <service-client port-type="admin:PolicyManagement"
+      processing="tns:PolicyManagementProcessing_Client">
+      <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                          direction="none"/>
+  </service-client>
+
+
+</package>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="security_providers"
+    targetNamespace="http://systinet.com/wasp/app/security_providers"
+    xmlns:tns="http://systinet.com/wasp/app/security_providers"
+    xmlns="http://systinet.com/wasp/package/1.3"
+    xmlns:core_services_client="http://systinet.com/wasp/app/core_services_client"
+    client-package="true"
+    library="true"
+    version="5.5">
+
+    <packager>
+        <name>Systinet</name>
+        <email>info@systinet.com</email>
+        <company>Systinet Corporation</company>
+        <url>http://systinet.com</url>
+    </packager>
+    <documentation url="http://www.systinet.com/doc/ssj-55/waspj/index.html">
+        <display-name>Security-Providers</display-name>
+        <description>Client side implementations of
+            Systinet Server security providers, which allow authentication,
+            and XML security.</description>
+    </documentation>
+    <license>http://www.systinet.com</license>
+    <location>http://systinet.com</location>
+
+    <dependency ref="core_services_client:core_services_client" version="1.0"/>
+    <transport
+        name="https_server"
+        implementation-class="com.idoox.transport.https.server.Jettys"
+        preload="false"
+        scheme="https"
+        default-server="true"
+        >
+    </transport>
+    <!-- NECCESSARY TO SPKM on the Sever Side -->
+    <!--service-instance name="SessionManagerService"
+        implementation-class="com.idoox.wasp.security.smanager.SessionManager"
+        /-->
+
+    <!--service-endpoint
+        name="SessionManager"
+        service-instance="tns:SessionManagerService"
+        path="/internal/security/SessionManager"
+        service-type="raw"
+        initiating-security-provider="no"
+        accepting-security-providers="no"
+        >
+    </service-endpoint-->
+
+    <transport
+        name="https_client"
+        implementation-class="com.idoox.transport.https.client.HttpsClient"
+        preload="false"
+        scheme="https"
+        >
+    </transport>
+
+    <module name="SecurityModule"
+        implementation-class="com.idoox.wasp.security.server.SecurityModule">
+    </module>
+
+            <interceptor
+                implementation-class="com.idoox.wasp.security.interceptor.ClientInterceptor"
+                name="GSSClientInterceptor"/>
+            <interceptor
+                implementation-class="com.idoox.wasp.security.interceptor.ServerInterceptor"
+                name="GSSServerInterceptor"/>
+
+            <interceptor
+                implementation-class="com.idoox.wasp.security.ssl.SSLInterceptor"
+                name="SSLInterceptor"/>
+
+            <interceptor
+                implementation-class="com.idoox.wasp.security.http.basic.ClientInterceptor"
+                name="HttpBasicClientInterceptor"/>
+            <interceptor
+                implementation-class="com.idoox.wasp.security.http.basic.ServerInterceptor"
+                name="HttpBasicServerInterceptor"/>
+
+            <interceptor
+                implementation-class="com.idoox.wasp.security.http.digest.ClientInterceptor"
+                name="HttpDigestClientInterceptor"/>
+            <interceptor
+                implementation-class="com.idoox.wasp.security.http.digest.ServerInterceptor"
+                name="HttpDigestServerInterceptor"/>
+
+            <interceptor
+                implementation-class="com.idoox.wasp.security.kerberos.KrbClientInterceptor"
+                name="KerberosClientInterceptor"/>
+            <interceptor
+                implementation-class="com.idoox.wasp.security.kerberos.KrbServerInterceptor"
+                name="KerberosServerInterceptor"/>
+
+            <!--
+            removed since wasp46
+                        <interceptor
+                            name="SoapDsigClientInterceptor"
+                            class="com.idoox.wasp.security.signature.ClientMessageSignature"
+                            >
+                            <signatureMode>true</signatureMode>
+                        </interceptor>
+                        <interceptor
+                            name="SoapDsigServerInterceptor"
+                            class="com.idoox.wasp.security.signature.ServerMessageSignature"
+                            >
+                            <signatureMode>true</signatureMode>
+                        </interceptor>
+            -->
+
+            <!-- Kerberos preferences, for client-->
+            <securityProviderPreferences xmlns="http://systinet.com/wasp/package/extension" name="Kerberos">
+                <!-- private state may be true or false. If it is true, message is encrypted.  -->
+                <privateState>true</privateState>
+            </securityProviderPreferences>
+
+            <!-- WS-Security preferences, for client-->
+            <!-- default timestampHeaderExpiration is 5 min -->
+            <securityProviderPreferences xmlns="http://systinet.com/wasp/package/extension" name="WS-Security"
+                timestampHeaderExpiration="300000"
+                ignoreTimestampHeaderExpiration="false"
+                noUsernameTokenValidation="false">
+                <securedMessage>
+                    <messageConf>
+                        <securityToken>
+                            <wsuId>DefaultConfUserNameSecurityToken-1</wsuId>
+                            <type>Username</type>
+                            <property propertyName="PasswordType" propertyValue="PasswordDigest"/>
+                            <order>0</order>
+                        </securityToken>
+                    </messageConf>
+                </securedMessage>
+
+                <securityTokenHandler>com.systinet.wasp.security.ws.impl.UsernameTokenHandler</securityTokenHandler>
+                <securityTokenHandler>com.systinet.wasp.security.ws.impl.X509SecurityTokenHandler</securityTokenHandler>
+                <securityTokenHandler>com.systinet.wasp.security.ws.impl.SymmetricKeyTokenHandler</securityTokenHandler>
+            </securityProviderPreferences>
+
+</package>

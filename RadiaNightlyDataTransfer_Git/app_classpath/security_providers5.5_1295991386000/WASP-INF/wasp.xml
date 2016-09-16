@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    name="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+    xmlns:core_services_client="http://systinet.com/wasp/app/core_services_client"
+    xmlns:tns="http://systinet.com/wasp/app/security_providers">
+    <classSpace name="[system][http://systinet.com/wasp/app/security_providers][security_providers]">
+
+        <parentClassSpace>[system][http://systinet.com/wasp/app/core_services_client][core_services_client]</parentClassSpace>
+    </classSpace>
+    <interceptor class="com.idoox.wasp.security.http.basic.ServerInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][HttpBasicServerInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.http.digest.ServerInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][HttpDigestServerInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.kerberos.KrbClientInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][KerberosClientInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.ssl.SSLInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][SSLInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.interceptor.ServerInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][GSSServerInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.http.digest.ClientInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][HttpDigestClientInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.http.basic.ClientInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][HttpBasicClientInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.kerberos.KrbServerInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][KerberosServerInterceptor]"/>
+    <interceptor class="com.idoox.wasp.security.interceptor.ClientInterceptor"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        name="[system][http://systinet.com/wasp/app/security_providers][GSSClientInterceptor]"/>
+    <module
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        loader="com.idoox.wasp.security.server.SecurityModule"
+        name="[system][http://systinet.com/wasp/app/security_providers][SecurityModule]"/>
+    <transport class="com.idoox.transport.https.client.HttpsClient"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        defaultServer="false"
+        name="[system][http://systinet.com/wasp/app/security_providers][https_client]"
+        preload="false" scheme="https"/>
+    <transport class="com.idoox.transport.https.server.Jettys"
+        classSpace="[system][http://systinet.com/wasp/app/security_providers][security_providers]"
+        defaultServer="true"
+        name="[system][http://systinet.com/wasp/app/security_providers][https_server]"
+        preload="false" scheme="https"/>
+    <securityProviderPreferences name="Kerberos" xmlns="http://systinet.com/wasp/package/extension">
+        <!-- private state may be true or false. If it is true, message is encrypted.  -->
+        <privateState>true</privateState>
+    </securityProviderPreferences>
+    <securityProviderPreferences ignoreTimestampHeaderExpiration="false"
+        name="WS-Security" noUsernameTokenValidation="false"
+        timestampHeaderExpiration="300000"
+        xmlns="http://systinet.com/wasp/package/extension">
+        <securedMessage>
+            <messageConf>
+                <securityToken>
+                    <wsuId>DefaultConfUserNameSecurityToken-1</wsuId>
+                    <type>Username</type>
+                    <property propertyName="PasswordType"
+                        propertyValue="PasswordDigest"/>
+                    <order>0</order>
+                </securityToken>
+            </messageConf>
+        </securedMessage>
+
+        <securityTokenHandler>com.systinet.wasp.security.ws.impl.UsernameTokenHandler</securityTokenHandler>
+
+        <securityTokenHandler>com.systinet.wasp.security.ws.impl.X509SecurityTokenHandler</securityTokenHandler>
+
+        <securityTokenHandler>com.systinet.wasp.security.ws.impl.SymmetricKeyTokenHandler</securityTokenHandler>
+    </securityProviderPreferences>
+</config>

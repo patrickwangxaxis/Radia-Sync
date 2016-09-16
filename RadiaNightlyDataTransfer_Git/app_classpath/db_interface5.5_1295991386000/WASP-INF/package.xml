@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="db_interface"
+         library="true"
+         client-package="true"
+         version="5.5"
+         targetNamespace="http://systinet.com/wasp/app/db_interface"
+         xmlns:tns="http://systinet.com/wasp/app/db_interface"
+         xmlns="http://systinet.com/wasp/package/1.3">
+
+    <documentation url="http://www.systinet.com/doc/ssj-55/waspj/index.html">
+        <display-name>DB Interface</display-name>
+        <description>Provides object persistentce and connection DBMS via JDBC</description>
+        <small-icon>http://www.systinet.com/images/logo_others.gif</small-icon>
+    </documentation>
+
+    <!-- DbInterface module -->
+    <module name="DbInterface" implementation-class="com.systinet.persistence.waspmodule.DbPersistenceWaspModule" />
+
+</package>

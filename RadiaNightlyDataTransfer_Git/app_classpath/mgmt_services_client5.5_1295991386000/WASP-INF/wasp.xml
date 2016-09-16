@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    name="[system][http://systinet.com/wasp/app/mgmt_services_client][mgmt_services_client]"
+    xmlns:core_services_client="http://systinet.com/wasp/app/core_services_client"
+    xmlns:tns="http://systinet.com/wasp/app/mgmt_services_client">
+    <classSpace name="[system][http://systinet.com/wasp/app/mgmt_services_client][mgmt_services_client]">
+
+        <parentClassSpace>[system][http://systinet.com/wasp/app/core_services_client][core_services_client]</parentClassSpace>
+    </classSpace>
+</config>

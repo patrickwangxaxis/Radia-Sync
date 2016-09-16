@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="persistent_store"
+    client-package="true"
+    library="true"
+    targetNamespace="http://systinet.com/wasp/persistent_store"
+    xmlns="http://systinet.com/wasp/package/1.3"
+    xmlns:db_interface="http://systinet.com/wasp/app/db_interface"
+    version="5.5">
+
+    <packager>
+        <name>Systinet</name>
+        <email>info@systinet.com</email>
+        <company>Systinet Corporation</company>
+        <url>http://systinet.com</url>
+    </packager>
+    <documentation>
+        <display-name>Persistent store</display-name>
+        <description>Persistent store for reliable messages and their sequences</description>
+    </documentation>
+
+    <license>http://www.systinet.com</license>
+    <location>http://systinet.com</location>
+
+    <dependency ref="db_interface:db_interface" version="5.5"/>
+
+    <module name="PersistentStoreModule"
+        implementation-class="com.systinet.wasp.persistentstore.PersistentStoreModule">
+    </module>
+
+</package>

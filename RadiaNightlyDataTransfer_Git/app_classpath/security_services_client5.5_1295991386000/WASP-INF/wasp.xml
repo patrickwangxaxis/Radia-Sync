@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    name="[system][http://systinet.com/wasp/app/security_services_client][security_services_client]"
+    xmlns:admin="http://systinet.com/wsdl/org/systinet/wasp/admin/"
+    xmlns:tns="http://systinet.com/wasp/app/security_services_client"
+    xmlns:wasp="http://systinet.com/wasp/app/builtin_serialization">
+    <classSpace name="[system][http://systinet.com/wasp/app/security_services_client][security_services_client]">
+
+        <parentClassSpace>[system][http://systinet.com/wasp/app/builtin_serialization][builtin_serialization]</parentClassSpace>
+    </classSpace>
+    <ServiceTypeConfig
+        name="http://systinet.com/wsdl/org/systinet/wasp/admin/:PolicyManagement"
+        serialization="[system][http://systinet.com/wasp/app/security_services_client][PolicyManagementProcessing_Client]">
+        <validation direction="none"
+            xmlns="http://systinet.com/wasp/package/validation/1.0"/>
+    </ServiceTypeConfig>
+    <serialization name="[system][http://systinet.com/wasp/app/security_services_client][ClientPrincipalEntriesSerializer]">
+        <serializationInstance xmlns:types="http://idoox.com/security">
+            <schemaPath>
+                <element type="typens:PrincipalEntries"
+                    xmlns:typens="http://idoox.com/security"/>
+            </schemaPath>
+            <serializer
+                class="com.systinet.wasp.admin.security.serialization.PrincipalEntriesSerializer"
+                classSpace="[system][http://systinet.com/wasp/app/security_services_client][security_services_client]"/>
+            <deserializer
+                class="com.systinet.wasp.admin.security.serialization.PrincipalEntriesDeserializer"
+                classSpace="[system][http://systinet.com/wasp/app/security_services_client][security_services_client]"/>
+            <serializedClass
+                class="org.systinet.security.policy.PrincipalEntries"
+                classSpace="[system][http://systinet.com/wasp/app/security_services_client][security_services_client]"/>
+        </serializationInstance>
+    </serialization>
+    <serialization name="[system][http://systinet.com/wasp/app/security_services_client][PolicyManagementProcessing_Client]">
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][SimpleSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][BasicConstructSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][MessageAttachmentSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][RequestMessageAttachmentSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ResponseMessageAttachmentSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ElementSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ArrayDeserializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][EnumerationSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][PropertiesSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][HashtableSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][TreeMapSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][SortedMapSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][HashMapSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][MapSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][TreeSetSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][SortedSetSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][HashSetSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][SetSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][VectorSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][LinkedListSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ArrayListSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ListSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][DateSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][KeySerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][CertificateSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][InterrefSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][PrincipalSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][PermissionSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][PermissionCollectionSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/security_services_client][ClientPrincipalEntriesSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][IteratorSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][ReflectionSerializer]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][DefaultSchemasSchemata]"/>
+        <import
+        ref="[system][http://systinet.com/wasp/app/builtin_serialization][EncodedSerializationSchemata]"/>
+        <schema namespaceURI="http://systinet.com/containers/encoded/ms.net">
+            <mapping language="java">
+                <type mapsTo="java.util.Iterator" name="Iterator"/>
+                <type mapsTo="java.util.Enumeration" name="Enumeration"/>
+                <type mapsTo="java.util.List" name="List"/>
+                <type mapsTo="java.util.ArrayList" name="ArrayList"/>
+                <type mapsTo="java.util.LinkedList" name="LinkedList"/>
+                <type mapsTo="java.util.Vector" name="Vector"/>
+                <type mapsTo="java.util.Set" name="Set"/>
+                <type mapsTo="java.util.HashSet" name="HashSet"/>
+                <type mapsTo="java.util.SortedSet" name="SortedSet"/>
+                <type mapsTo="java.util.TreeSet" name="TreeSet"/>
+                <type mapsTo="java.util.Map" name="Map"/>
+                <type mapsTo="java.util.Hashtable" name="Hashtable"/>
+                <type mapsTo="java.util.Properties" name="Properties"/>
+                <type mapsTo="java.util.HashMap" name="HashMap"/>
+                <type mapsTo="java.util.SortedMap" name="SortedMap"/>
+                <type mapsTo="java.util.TreeMap" name="TreeMap"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://idoox.com/security">
+            <mapping language="java">
+                <type mapsTo="java.security.Key" name="Key"/>
+                <type mapsTo="java.security.cert.Certificate"
+                    name="Certificate"/>
+                <type mapsTo="java.security.Permission" name="Permission"/>
+                <type mapsTo="java.security.Principal" name="Principal"/>
+                <type mapsTo="java.security.PermissionCollection"
+                    name="PermissionCollection"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://www.w3.org/2001/XMLSchema">
+            <mapping language="java">
+                <type mapsTo="java.util.Date" name="dateTime"/>
+                <type mapsTo="boolean" name="boolean"/>
+                <type mapsTo="java.lang.Boolean" name="boolean"/>
+                <type mapsTo="java.lang.String" name="string"/>
+                <type mapsTo="char" name="string"/>
+                <type mapsTo="java.lang.Character" name="string"/>
+                <type mapsTo="double" name="double"/>
+                <type mapsTo="java.lang.Double" name="double"/>
+                <type mapsTo="float" name="float"/>
+                <type mapsTo="java.lang.Float" name="float"/>
+                <type mapsTo="int" name="int"/>
+                <type mapsTo="java.lang.Integer" name="int"/>
+                <type mapsTo="java.lang.String" name="char"/>
+                <type mapsTo="short" name="short"/>
+                <type mapsTo="java.lang.Short" name="short"/>
+                <type mapsTo="long" name="long"/>
+                <type mapsTo="java.lang.Long" name="long"/>
+                <type mapsTo="byte" name="byte"/>
+                <type mapsTo="java.lang.Byte" name="byte"/>
+                <type mapsTo="byte[]" name="base64Binary"/>
+                <type mapsTo="java.math.BigDecimal" name="decimal"/>
+                <type mapsTo="java.math.BigInteger" name="integer"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.DateTime"
+                    name="dateTime"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Duration"
+                    name="duration"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Time"
+                    name="time"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Date"
+                    name="date"/>
+                <type
+                    mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GYearMonth"
+                    name="gYearMonth"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GYear"
+                    name="gYear"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GMonthDay"
+                    name="gMonthDay"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GDay"
+                    name="gDay"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GMonth"
+                    name="gMonth"/>
+                <type mapsTo="java.lang.String" name="anyURI"/>
+                <type mapsTo="javax.xml.namespace.QName" name="QName"/>
+                <type mapsTo="java.lang.String" name="NOTATION"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.HexBinary"
+                    name="hexBinary"/>
+                <type
+                    mapsTo="org.idoox.wasp.serialization.xsdbuiltin.NormalizedString"
+                    name="normalizedString"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Token"
+                    name="token"/>
+                <type mapsTo="java.lang.String" name="ENTITIES"/>
+                <type mapsTo="java.lang.String" name="ENTITY"/>
+                <type mapsTo="java.lang.String" name="ID"/>
+                <type mapsTo="java.lang.String" name="IDREF"/>
+                <type mapsTo="java.lang.String" name="IDREFS"/>
+                <type mapsTo="java.lang.String" name="NCName"/>
+                <type mapsTo="java.lang.String" name="NMTOKEN"/>
+                <type mapsTo="java.lang.String" name="NMTOKENS"/>
+                <type mapsTo="java.lang.String" name="Name"/>
+                <type mapsTo="java.lang.String" name="language"/>
+                <type mapsTo="java.math.BigInteger" name="negativeInteger"/>
+                <type mapsTo="java.math.BigInteger" name="nonNegativeInteger"/>
+                <type mapsTo="java.math.BigInteger" name="nonPositiveInteger"/>
+                <type mapsTo="java.math.BigInteger" name="positiveInteger"/>
+                <type mapsTo="java.lang.Short" name="unsignedByte"/>
+                <type mapsTo="java.lang.Long" name="unsignedInt"/>
+                <type mapsTo="java.math.BigInteger" name="unsignedLong"/>
+                <type mapsTo="java.lang.Integer" name="unsignedShort"/>
+                <type mapsTo="java.lang.Object" name="anyType"/>
+                <type mapsTo="java.lang.Object" name="anySimpleType"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://www.w3.org/2000/10/XMLSchema">
+            <mapping language="java">
+                <type mapsTo="boolean" name="boolean"/>
+                <type mapsTo="java.lang.Boolean" name="boolean"/>
+                <type mapsTo="java.lang.String" name="string"/>
+                <type mapsTo="char" name="string"/>
+                <type mapsTo="java.lang.Character" name="string"/>
+                <type mapsTo="double" name="double"/>
+                <type mapsTo="java.lang.Double" name="double"/>
+                <type mapsTo="float" name="float"/>
+                <type mapsTo="java.lang.Float" name="float"/>
+                <type mapsTo="java.lang.String" name="timeInstant"/>
+                <type mapsTo="int" name="int"/>
+                <type mapsTo="java.lang.Integer" name="int"/>
+                <type mapsTo="long" name="long"/>
+                <type mapsTo="java.lang.Long" name="long"/>
+                <type mapsTo="byte" name="byte"/>
+                <type mapsTo="java.lang.Byte" name="byte"/>
+                <type mapsTo="byte[]" name="binary"/>
+                <type mapsTo="java.math.BigDecimal" name="decimal"/>
+                <type mapsTo="short" name="short"/>
+                <type mapsTo="java.lang.Short" name="short"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Duration"
+                    name="timeDuration"/>
+                <type mapsTo="java.lang.String" name="uriReference"/>
+                <type mapsTo="java.lang.String" name="ID"/>
+                <type mapsTo="java.lang.String" name="IDREF"/>
+                <type mapsTo="java.lang.String" name="ENTITY"/>
+                <type mapsTo="javax.xml.namespace.QName" name="QName"/>
+                <type mapsTo="java.lang.String" name="CDATA"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Token"
+                    name="token"/>
+                <type mapsTo="java.lang.String" name="language"/>
+                <type mapsTo="java.lang.String" name="IDREFS"/>
+                <type mapsTo="java.lang.String" name="ENTITIES"/>
+                <type mapsTo="java.lang.String" name="NMTOKEN"/>
+                <type mapsTo="java.lang.String" name="NMTOKENS"/>
+                <type mapsTo="java.lang.String" name="Name"/>
+                <type mapsTo="java.lang.String" name="NCName"/>
+                <type mapsTo="java.lang.String" name="NOTATION"/>
+                <type mapsTo="java.math.BigInteger" name="integer"/>
+                <type mapsTo="java.math.BigInteger" name="nonPositiveInteger"/>
+                <type mapsTo="java.math.BigInteger" name="negativeInteger"/>
+                <type mapsTo="java.math.BigInteger" name="nonNegativeInteger"/>
+                <type mapsTo="java.math.BigInteger" name="unsignedLong"/>
+                <type mapsTo="java.lang.Long" name="unsignedInt"/>
+                <type mapsTo="java.lang.Integer" name="unsignedShort"/>
+                <type mapsTo="java.lang.Short" name="unsignedByte"/>
+                <type mapsTo="java.math.BigInteger" name="positiveInteger"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Time"
+                    name="time"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Date"
+                    name="date"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GMonth"
+                    name="month"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.GYear"
+                    name="year"/>
+                <type mapsTo="java.lang.Object" name="anyType"/>
+                <type mapsTo="java.lang.Object" name="anySimpleType"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://www.w3.org/1999/XMLSchema">
+            <mapping language="java">
+                <type mapsTo="boolean" name="boolean"/>
+                <type mapsTo="java.lang.Boolean" name="boolean"/>
+                <type mapsTo="java.lang.String" name="string"/>
+                <type mapsTo="char" name="string"/>
+                <type mapsTo="java.lang.Character" name="string"/>
+                <type mapsTo="double" name="double"/>
+                <type mapsTo="java.lang.Double" name="double"/>
+                <type mapsTo="float" name="float"/>
+                <type mapsTo="java.lang.Float" name="float"/>
+                <type mapsTo="java.lang.String" name="timeInstant"/>
+                <type mapsTo="int" name="int"/>
+                <type mapsTo="java.lang.Integer" name="int"/>
+                <type mapsTo="long" name="long"/>
+                <type mapsTo="java.lang.Long" name="long"/>
+                <type mapsTo="byte" name="byte"/>
+                <type mapsTo="java.lang.Byte" name="byte"/>
+                <type mapsTo="byte[]" name="binary"/>
+                <type mapsTo="java.math.BigDecimal" name="decimal"/>
+                <type mapsTo="short" name="short"/>
+                <type mapsTo="java.lang.Short" name="short"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Duration"
+                    name="timeDuration"/>
+                <type mapsTo="java.lang.String" name="uri"/>
+                <type mapsTo="java.lang.String" name="language"/>
+                <type mapsTo="java.lang.String" name="NMTOKEN"/>
+                <type mapsTo="java.lang.String" name="NMTOKENS"/>
+                <type mapsTo="java.lang.String" name="Name"/>
+                <type mapsTo="javax.xml.namespace.QName" name="QName"/>
+                <type mapsTo="java.lang.String" name="NCName"/>
+                <type mapsTo="java.lang.String" name="ID"/>
+                <type mapsTo="java.lang.String" name="IDREF"/>
+                <type mapsTo="java.lang.String" name="IDREFS"/>
+                <type mapsTo="java.lang.String" name="ENTITY"/>
+                <type mapsTo="java.lang.String" name="ENTITIES"/>
+                <type mapsTo="java.lang.String" name="NOTATION"/>
+                <type mapsTo="java.math.BigInteger" name="integer"/>
+                <type mapsTo="java.math.BigInteger"
+                    name="non-negative-integer"/>
+                <type mapsTo="java.math.BigInteger" name="positive-integer"/>
+                <type mapsTo="java.math.BigInteger"
+                    name="non-positive-integer"/>
+                <type mapsTo="java.math.BigInteger" name="negative-integer"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Date"
+                    name="date"/>
+                <type mapsTo="org.idoox.wasp.serialization.xsdbuiltin.Time"
+                    name="time"/>
+                <type mapsTo="java.lang.Object" name="anyType"/>
+                <type mapsTo="java.lang.Object" name="anySimpleType"/>
+                <type mapsTo="java.lang.Object" name="simpleType"/>
+                <type mapsTo="java.lang.Object" name="urType"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://schemas.xmlsoap.org/soap/encoding/">
+            <mapping language="java">
+                <type mapsTo="byte[]" name="base64"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://www.w3.org/2003/05/soap-encoding">
+            <mapping language="java">
+                <type mapsTo="byte[]" name="base64"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://idoox.com/interface">
+            <mapping language="java">
+                <type mapsTo="java.rmi.Remote" name="serviceReference"/>
+            </mapping>
+        </schema>
+        <schema namespaceURI="http://idoox.com/security">
+            <mapping language="java">
+                <type mapsTo="org.systinet.security.policy.PrincipalEntries"
+                    name="PrincipalEntries"/>
+            </mapping>
+        </schema>
+    </serialization>
+</config>

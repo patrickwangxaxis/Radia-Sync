@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="sforce">
+	<property file="build.properties" />
+	<property name="DeployDir" value="deploy" />
+	<property name="SFDeployDir" value="lib" />
+	<property name="SrcDir" value="src" />
+	<property name="SFSrcDir" value="sforce" />
+	<property name="BuildDir" value="build" />
+    <property name="libDir" value="lib"/>
+    <property name="JAR_NAME" value="radiaNightlyDataTransfer" />
+	<property name="SF_JAR_NAME" value="sforce" />
+	<target depends="clean, initJar, compile, jar" name="all" />
+	<target depends="clean, initJar, SFcompile, SFjar" name="sforceJar" />
+
+  <target depends="clean" name="initJar">
+    <mkdir dir="${BuildDir}"/>
+    <mkdir dir="${DeployDir}"/>
+  </target>
+  
+
+  <target name="clean">
+	<delete dir="${BuildDir}" />
+	<delete dir="${DeployDir}" />
+  </target>
+
+  
+  <target name="copyLib">
+    	<copy todir="${BuildDir}/WEB-INF/lib">
+      	<fileset dir="${libDir}">
+           <patternset>
+            <exclude name="${EXCLUDE_LIST}"/>
+           </patternset>
+        </fileset>
+    	</copy>
+  </target>
+
+  
+
+  <target name="compile">
+	<javac debug="on" destdir="${BuildDir}" srcdir="${SrcDir}" compiler="javac1.8">
+		<classpath>
+			<pathelement path="${CLASSPATH}" />
+		</classpath>
+	</javac>
+  </target>
+
+  <target name="SFcompile">
+	<javac debug="on" destdir="${BuildDir}" srcdir="${SFSrcDir}">
+		<classpath>
+			<pathelement path="${CLASSPATH}" />
+		</classpath>
+	</javac>
+  </target>
+
+
+
+  <target name="jar">
+	<jar basedir="${BuildDir}" jarfile="${DeployDir}/${JAR_NAME}.jar" />
+  </target>
+
+  <target name="SFjar">
+	<jar basedir="${BuildDir}" jarfile="${SFDeployDir}/${SF_JAR_NAME}.jar" />
+  </target>
+
+  <target name="ftpJar">
+  <ftp binary="yes" password="${ftp_passwd}" remotedir="${jar_dir}" server="${ftp_server}" userid="${ftp_user}">
+    <fileset dir="${DeployDir}">
+        <include name="*.jar"/>
+    </fileset>
+  </ftp>
+  </target>
+
+</project>

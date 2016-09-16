@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="core_services_client"
+    client-package="true"
+    library="true"
+    targetNamespace="http://systinet.com/wasp/app/core_services_client"
+    xmlns:tns="http://systinet.com/wasp/app/core_services_client"
+    xmlns:ping="pingns"
+    xmlns:mgmtns="http://systinet.com/wsdl/org/systinet/wasp/mgmt/"
+    xmlns:defsec="http://systinet.com/wsdl/com/systinet/wasp/admin/"
+    xmlns="http://systinet.com/wasp/package/1.3"
+    version="5.5">
+
+    <packager>
+        <name>Systinet</name>
+        <email>info@systinet.com</email>
+        <company>Systinet Corporation</company>
+        <url>http://systinet.com</url>
+    </packager>
+
+    <license>http://www.systinet.com</license>
+
+    <documentation url="http://www.systinet.com/doc/ssj-55/waspj/index.html">
+        <display-name>Core-Services-Client</display-name>
+        <description>Client side of the DeployService, PingService and SecurityInfo service.</description>
+        <small-icon>http://www.systinet.com/images/logo_others.gif</small-icon>
+    </documentation>
+
+    <service-client port-name="ping:PingInterface"
+        initiating-security-provider="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                            direction="none"/>
+    </service-client>
+
+    <service-client port-name="defsec:SecurityInfo"
+        initiating-security-provider="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                            direction="none"/>
+    </service-client>
+
+    <service-client port-name="mgmtns:DeployService">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                            direction="none"/>
+    </service-client>
+
+    <location>http://systinet.com</location>
+
+    <!-- DebugFileService service-instance -->
+    <service-instance name="DebugFileServiceInstance"
+        implementation-class="com.systinet.wasp.core.DebugFileServiceImpl"/>
+
+    <!-- DebugFileService service-endpoint -->
+    <service-endpoint name="DebugFileService"
+            service-instance="tns:DebugFileServiceInstance"
+            path="*/debug"
+            initiating-security-provider="no"
+            accepting-security-providers="HttpBasic">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+
+    <!-- WSDLService service-instance -->
+    <service-instance name="WSDLServiceInstance"
+        implementation-class="com.systinet.wasp.core.WSDLServiceImpl"/>
+
+    <!-- WSDLService service-endpoints -->
+    <service-endpoint name="WSDLService1"
+        service-instance="tns:WSDLServiceInstance"
+        path="*/wsdl"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <service-endpoint name="WSDLService2"
+        service-instance="tns:WSDLServiceInstance"
+        path="*/WSDL"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <service-endpoint name="WSDLService3"
+        service-instance="tns:WSDLServiceInstance"
+        path="*/wsdl/"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <service-endpoint name="WSDLService4"
+        service-instance="tns:WSDLServiceInstance"
+        path="*/WSDL/"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <service-endpoint name="WSDLService5"
+        service-instance="tns:WSDLServiceInstance"
+        path="*.wsdl"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <service-endpoint name="WSDLService6"
+        service-instance="tns:WSDLServiceInstance"
+        path="*.WSDL"
+        initiating-security-provider="no"
+        accepting-security-providers="no">
+        <validation xmlns="http://systinet.com/wasp/package/validation/1.0"
+                        direction="none"/>
+    </service-endpoint>
+
+    <!-- Backward compatibility module -->
+    <sysServicesConvertors xmlns="http://systinet.com/wasp/package/extension" name="main">
+        <!-- Identity convertor : 4.5 -> 4.5, see configuration identityConvertor -->
+        <convertor packageName="{http://systinet.com/wasp/app/core_services_client_client}core_services_client" className="com.systinet.wasp.bc.IdentityConvertor"/>
+        <!-- Security Info -->
+        <convertor packageName="{http://systinet.com/wasp/app/core_services_bc_client}core_services_bc_client" className="com.systinet.wasp.admin.security.SecurityInfoConvertor"/>
+        <!-- Deploy -->
+        <convertor packageName="{http://systinet.com/wasp/app/core_services_bc_client}core_services_bc_client" className="com.systinet.wasp.admin.old.DeployServiceConvertor"/>
+        <!-- Admin Service -->
+        <convertor packageName="{http://systinet.com/wasp/app/mgmt_services_bc_client}mgmt_services_bc_client" className="com.systinet.wasp.admin.bc.AdminServiceConvertor"/>
+        <!-- PStore service -->
+        <convertor packageName="{http://systinet.com/wasp/app/security_services_bc_client}security_services_bc_client" className="com.systinet.wasp.admin.security.SecurityServiceConvertor"/>
+    </sysServicesConvertors>
+    <!-- Configuration of the identity convertor -->
+    <identityConvertor xmlns="http://systinet.com/wasp/package/extension" name="main">
+        <service interfaceName="org.systinet.wasp.admin.SecurityInfoService" packageName="{http://systinet.com/wasp/app/core_services_client}core_services_client" servicePath="/admin/SecurityInfo" versions="+,4.6,4.5" serviceName="Security Info"/>
+        <service interfaceName="org.systinet.wasp.admin.DeployService" packageName="{http://systinet.com/wasp/app/core_services_client}core_services_client" servicePath="/mgmt/DeployService" versions="+,4.6" serviceName="Deploy"/>
+        <service interfaceName="org.systinet.wasp.mgmt.AdminService" packageName="{http://systinet.com/wasp/app/mgmt_services_client}mgmt_services_client" servicePath="/mgmt/AdminService" versions="+,4.6,4.5" serviceName="Administration"/>
+        <service interfaceName="org.systinet.wasp.admin.PolicyManagement" packageName="{http://systinet.com/wasp/app/security_services_client}security_services_client" servicePath="/admin/PolicyManagement" versions="+,4.6,4.5" serviceName="Policy Management"/>
+        <service interfaceName="com.idoox.wasp.server.PingInterface" packageName="{http://systinet.com/wasp/app/core_services_client}core_services_client" servicePath="/PingService/" versions="+,4.6,4.5,4.0,3.1,3.0" serviceName="Ping"/>
+        <service interfaceName="org.systinet.wasp.admin.security.PStoreService" packageName="{http://systinet.com/wasp/app/security_services_client}security_services_client" servicePath="/admin/PStoreService" versions="+,4.6,4.5" serviceName="PStore"/>
+
+        <!--Utility Services -->
+        <service interfaceName="org.systinet.wasp.management.services.wsdlc.WSDLCompilerService"
+            packageName="{http://systinet.com/wasp/app/util/wsdlc_client}wsdlc_client"
+            servicePath="/util/WSDLCompilerService" versions="+,4.6,4.5,4.0" serviceName="WSDL2Java"/>
+        <service interfaceName="org.systinet.wasp.management.services.wsdiscovery.WsDiscoveryApi"
+            packageName="{http://systinet.com/wasp/app/util/wsdiscovery_client}wsdiscovery_client"
+            servicePath="/util/WsDiscovery" versions="+,4.6,4.5,4.0" serviceName="WsDiscovery"/>
+        <service interfaceName="org.systinet.wasp.management.services.wsdiscovery.WsDiscoveryMgmtApi"
+            packageName="{http://systinet.com/wasp/app/util/wsdiscovery_client}wsdiscovery_client"
+            servicePath="/util/WsDiscovery/secure" versions="+,4.6,4.5,4.0" serviceName="WsDiscoveryMgmtApi"/>
+    </identityConvertor>
+</package>

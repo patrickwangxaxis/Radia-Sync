@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dd:package name="builtin_serialization"
+            library="true"
+            client-package="true"
+            targetNamespace="http://systinet.com/wasp/app/builtin_serialization"
+            version="5.5"
+            xmlns:tns="http://systinet.com/wasp/app/builtin_serialization"
+            xmlns:dd="http://systinet.com/wasp/package/1.3">
+
+    <dd:packager>
+        <dd:name>Systinet</dd:name>
+        <dd:email>info@systinet.com</dd:email>
+        <dd:company>Systinet Corporation</dd:company>
+        <dd:url>http://systinet.com</dd:url>
+    </dd:packager>
+
+    <dd:license>http://www.systinet.com</dd:license>
+
+    <dd:documentation url="http://www.systinet.com/doc/ssj-55/waspj/index.html">
+        <dd:display-name>Builtin-Serialization</dd:display-name>
+        <dd:description>Basic SOAP serializers and deserializers.</dd:description>
+        <dd:small-icon>http://www.systinet.com/images/logo_others.gif</dd:small-icon>
+    </dd:documentation>
+
+
+    <!-- XmlSerialization, equals to document/literal -->
+
+    <dd:processing name="XmlSerialization">
+
+        <dd:use ref="tns:DefaultSchemas" />
+
+        <!-- .NET literal containers XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/serialization/xml/msnet/msnetLiteralContainers.xsd"
+                   namespaceURI="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:type-mapping name="XMLContainersMapping"
+                         language="java"
+                         xmlns:types="http://systinet.com/containers/literal/ms.net"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Iterator" maps-to="java.util.Iterator" />
+            <dd:type name="types:Collection" maps-to="java.util.Collection" />
+            <dd:type name="types:Enumeration" maps-to="java.util.Enumeration" />
+            <dd:type name="types:List" maps-to="java.util.List" />
+            <dd:type name="types:ArrayList" maps-to="java.util.ArrayList" />
+            <dd:type name="types:LinkedList" maps-to="java.util.LinkedList" />
+            <dd:type name="types:Vector" maps-to="java.util.Vector" />
+            <dd:type name="types:Set" maps-to="java.util.Set" />
+            <dd:type name="types:HashSet" maps-to="java.util.HashSet" />
+            <dd:type name="types:SortedSet" maps-to="java.util.SortedSet" />
+            <dd:type name="types:TreeSet" maps-to="java.util.TreeSet" />
+            <dd:type name="types:Map" maps-to="java.util.Map" />
+            <dd:type name="types:Hashtable" maps-to="java.util.Hashtable" />
+            <dd:type name="types:Properties" maps-to="java.util.Properties" />
+            <dd:type name="types:HashMap" maps-to="java.util.HashMap" />
+            <dd:type name="types:SortedMap" maps-to="java.util.SortedMap" />
+            <dd:type name="types:TreeMap" maps-to="java.util.TreeMap" />
+        </dd:type-mapping>
+
+        <!-- Security types XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/security/securityLiteral.xsd"
+                   namespaceURI="http://idoox.com/security" />
+
+        <dd:type-mapping name="SecurityMapping"
+                         language="java"
+                         xmlns:types="http://idoox.com/security"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Key" maps-to="java.security.Key"/>
+            <dd:type name="types:Certificate" maps-to="java.security.cert.Certificate"/>
+            <dd:type name="types:Permission" maps-to="java.security.Permission"/>
+            <dd:type name="types:Principal" maps-to="java.security.Principal"/>
+            <dd:type name="types:PermissionCollection" maps-to="java.security.PermissionCollection"/>
+        </dd:type-mapping>
+
+        <!-- Remote references XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/interrefs/interrefsLiteral.xsd"
+                   namespaceURI="http://idoox.com/interface"/>
+
+        <dd:type-mapping name="XMLSchemaInterrefs"
+                         language="java"
+                         xmlns:types="http://idoox.com/interface">
+            <dd:type name="types:serviceReference" maps-to="java.rmi.Remote"/>
+        </dd:type-mapping>
+
+        <dd:serialization name="XMLSimpleSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.XMLSimpleSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.XMLSimpleDeserializer"
+                          following-parts="tns:XMLMessageAttachmentDeserializer" />
+
+        <dd:serialization name="XMLMessageAttachmentDeserializer"
+                          deserializer-class="com.idoox.wasp.serialization.attachments.XMLAttachmentDeserializer"
+                          serialized-class="org.idoox.wasp.types.MessageAttachment"
+                          following-parts="tns:XMLBasicConstructSerializer">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="XMLBasicConstructSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.XMLBasicConstructSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.XMLBasicConstructDeserializer"
+                          following-parts="tns:XMLReflectionSerializer" />
+
+        <dd:serialization name="XMLMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.XMLAttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.MessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="XMLRequestMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.XMLAttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.RequestMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="XMLResponseMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.XMLAttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.ResponseMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="XMLElementSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.XMLElementSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.XMLElementDeserializer"
+                          serialized-class="org.w3c.dom.Node" />
+
+        <dd:serialization name="XMLIteratorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLIteratorSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLIteratorDeserializer"
+                          serialized-type="types:Iterator"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net"
+                          preceding-parts="tns:XMLBasicConstructSerializer"
+                          following-parts="tns:XMLReflectionSerializer" />
+
+        <dd:serialization name="XMLEnumerationSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLEnumerationSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLEnumerationDeserializer"
+                          serialized-type="types:Enumeration"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLTreeMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLTreeMapDeserializer"
+                          serialized-type="types:TreeMap"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLSortedMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLSortedMapDeserializer"
+                          serialized-type="types:SortedMap"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLHashMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLHashMapDeserializer"
+                          serialized-type="types:HashMap"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLPropertiesSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLPropertiesDeserializer"
+                          serialized-type="types:Properties"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLHashtableSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLHashtableDeserializer"
+                          serialized-type="types:Hashtable"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLMapDeserializer"
+                          serialized-type="types:Map"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLTreeSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLTreeSetDeserializer"
+                          serialized-type="types:TreeSet"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLSortedSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLSortedSetDeserializer"
+                          serialized-type="types:SortedSet"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLHashSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLHashSetDeserializer"
+                          serialized-type="types:HashSet"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLSetDeserializer"
+                          serialized-type="types:Set"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLVectorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLVectorDeserializer"
+                          serialized-type="types:Vector"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLLinkedListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLLinkedListDeserializer"
+                          serialized-type="types:LinkedList"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLArrayListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLArrayListDeserializer"
+                          serialized-type="types:ArrayList"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLListDeserializer"
+                          serialized-type="types:List"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLCollectionSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.msnet.XMLCollectionDeserializer"
+                          serialized-type="types:Collection"
+                          xmlns:types="http://systinet.com/containers/literal/ms.net" />
+
+        <dd:serialization name="XMLKeySerializer"
+                          serializer-class="com.idoox.wasp.security.XMLKeySerializer"
+                          deserializer-class="com.idoox.wasp.security.XMLKeyDeserializer"
+                          serialized-class="java.security.Key"
+                          serialized-type="types:Key"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="XMLCertificateSerializer"
+                          serializer-class="com.idoox.wasp.security.XMLCertificateSerializer"
+                          deserializer-class="com.idoox.wasp.security.XMLCertificateDeserializer"
+                          serialized-class="java.security.cert.Certificate"
+                          serialized-type="types:Certificate"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="XMLPrincipalSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.XMLPrincipalSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.XMLPrincipalDeserializer"
+                          serialized-class="java.security.Principal"
+                          serialized-type="types:Principal"
+                          xmlns:types="http://idoox.com/security"/>
+
+        <dd:serialization name="XMLPermissionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.XMLPermissionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.XMLPermissionDeserializer"
+                          serialized-class="java.security.Permission"
+                          serialized-type="types:Permission"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="XMLPermissionCollectionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.XMLPermissionCollectionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.XMLPermissionCollectionDeserializer"
+                          serialized-class="java.security.PermissionCollection"
+                          serialized-type="types:PermissionCollection"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="XMLInterrefSerializer"
+                          serializer-class="com.idoox.wasp.interrefs.InterrefSerializer"
+                          deserializer-class="com.idoox.wasp.interrefs.InterrefDeserializer"
+                          serialized-type="types:serviceReference"
+                          xmlns:types="http://idoox.com/interface" />
+
+        <dd:serialization name="XMLDateSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xsdbuiltin.XMLDateSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xsdbuiltin.XMLDateDeserializer"
+                          serialized-class="java.util.Date" />
+
+        <dd:serialization name="XMLReflectionSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xml.XMLReflectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xml.XMLReflectionDeserializer"
+                          preceding-parts="tns:XMLBasicConstructSerializer" />
+
+    </dd:processing>
+
+    <!-- EncodedSerialization, equals to RPC/encoded -->
+
+    <dd:processing name="EncodedSerialization">
+
+        <dd:use ref="tns:DefaultSchemas" />
+
+        <!-- .NET encoded containers XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/serialization/javabuiltin/msnet/msnetEncodedContainers.xsd"
+                   namespaceURI="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:type-mapping name="ContainersMapping"
+                         language="java"
+                         xmlns:types="http://systinet.com/containers/encoded/ms.net"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Iterator" maps-to="java.util.Iterator"/>
+            <dd:type name="types:Enumeration" maps-to="java.util.Enumeration"/>
+            <dd:type name="types:List" maps-to="java.util.List"/>
+            <dd:type name="types:ArrayList" maps-to="java.util.ArrayList"/>
+            <dd:type name="types:LinkedList" maps-to="java.util.LinkedList"/>
+            <dd:type name="types:Vector" maps-to="java.util.Vector"/>
+            <dd:type name="types:Set" maps-to="java.util.Set"/>
+            <dd:type name="types:HashSet" maps-to="java.util.HashSet"/>
+            <dd:type name="types:SortedSet" maps-to="java.util.SortedSet"/>
+            <dd:type name="types:TreeSet" maps-to="java.util.TreeSet"/>
+            <dd:type name="types:Map" maps-to="java.util.Map"/>
+            <dd:type name="types:Hashtable" maps-to="java.util.Hashtable"/>
+            <dd:type name="types:Properties" maps-to="java.util.Properties"/>
+            <dd:type name="types:HashMap" maps-to="java.util.HashMap"/>
+            <dd:type name="types:SortedMap" maps-to="java.util.SortedMap"/>
+            <dd:type name="types:TreeMap" maps-to="java.util.TreeMap"/>
+        </dd:type-mapping>
+
+        <!-- Security types XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/security/securityEncoded.xsd"
+                   namespaceURI="http://idoox.com/security" />
+
+        <dd:type-mapping name="SecurityMapping"
+                         language="java"
+                         xmlns:types="http://idoox.com/security"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Key" maps-to="java.security.Key"/>
+            <dd:type name="types:Certificate" maps-to="java.security.cert.Certificate"/>
+            <dd:type name="types:Permission" maps-to="java.security.Permission"/>
+            <dd:type name="types:Principal" maps-to="java.security.Principal"/>
+            <dd:type name="types:PermissionCollection" maps-to="java.security.PermissionCollection"/>
+        </dd:type-mapping>
+
+        <!-- Remote references XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/interrefs/interrefsEncoded.xsd"
+                   namespaceURI="http://idoox.com/interface"/>
+
+        <dd:type-mapping name="SchemaInterrefs"
+                         language="java"
+                         xmlns:types="http://idoox.com/interface">
+            <dd:type name="types:serviceReference" maps-to="java.rmi.Remote"/>
+        </dd:type-mapping>
+
+        <dd:serialization name="SimpleSerializer"
+                          serializer-class="com.idoox.wasp.serialization.SimpleSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.SimpleDeserializer"
+                          following-parts="tns:BasicConstructSerializer" />
+
+        <dd:serialization name="BasicConstructSerializer"
+                          serializer-class="com.idoox.wasp.serialization.BasicConstructSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.BasicConstructDeserializer"
+                          following-parts="tns:ReflectionSerializer" />
+
+        <dd:serialization name="MessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.MessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="RequestMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.RequestMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="ResponseMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.ResponseMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="ElementSerializer"
+                          serializer-class="com.idoox.wasp.serialization.ElementSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.ElementDeserializer"
+                          serialized-class="org.w3c.dom.Node" />
+
+        <dd:serialization name="ArrayDeserializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ArrayDeserializer"
+                          serialized-type="types:ArrayOfAnyType"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net"/>
+
+        <dd:serialization name="IteratorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.IteratorSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.IteratorDeserializer"
+                          serialized-type="types:Iterator"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net"
+                          preceding-parts="tns:BasicConstructSerializer"
+                          following-parts="tns:ReflectionSerializer" />
+
+        <dd:serialization name="EnumerationSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.EnumerationSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.EnumerationDeserializer"
+                          serialized-type="types:Enumeration"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="PropertiesSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.PropertiesDeserializer"
+                          serialized-type="types:Properties"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="HashtableSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.HashtableDeserializer"
+                          serialized-type="types:Hashtable"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="TreeMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.TreeMapDeserializer"
+                          serialized-type="types:TreeMap"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="SortedMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SortedMapDeserializer"
+                          serialized-type="types:SortedMap"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="HashMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.HashMapDeserializer"
+                          serialized-type="types:HashMap"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="MapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.MapDeserializer"
+                          serialized-type="types:Map"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="TreeSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.TreeSetDeserializer"
+                          serialized-type="types:TreeSet"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="SortedSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SortedSetDeserializer"
+                          serialized-type="types:SortedSet"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="HashSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.HashSetDeserializer"
+                          serialized-type="types:HashSet"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="SetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.SetDeserializer"
+                          serialized-type="types:Set"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="VectorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.VectorDeserializer"
+                          serialized-type="types:Vector"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="LinkedListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.LinkedListDeserializer"
+                          serialized-type="types:LinkedList"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="ArrayListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ArrayListDeserializer"
+                          serialized-type="types:ArrayList"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="ListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.msnet.ListDeserializer"
+                          serialized-type="types:List"
+                          xmlns:types="http://systinet.com/containers/encoded/ms.net" />
+
+        <dd:serialization name="DateSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xsdbuiltin.DateSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xsdbuiltin.DateDeserializer"
+                          serialized-class="java.util.Date" />
+
+        <dd:serialization name="KeySerializer"
+                          serializer-class="com.idoox.wasp.security.KeySerializer"
+                          deserializer-class="com.idoox.wasp.security.KeyDeserializer"
+                          serialized-class="java.security.Key"
+                          serialized-type="types:Key"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="CertificateSerializer"
+                          serializer-class="com.idoox.wasp.security.CertificateSerializer"
+                          deserializer-class="com.idoox.wasp.security.CertificateDeserializer"
+                          serialized-class="java.security.cert.Certificate"
+                          serialized-type="types:Certificate"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="InterrefSerializer"
+                          serializer-class="com.idoox.wasp.interrefs.InterrefSerializer"
+                          deserializer-class="com.idoox.wasp.interrefs.InterrefDeserializer"
+                          serialized-type="types:serviceReference"
+                          xmlns:types="http://idoox.com/interface" />
+
+        <dd:serialization name="PrincipalSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PrincipalSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PrincipalDeserializer"
+                          serialized-class="java.security.Principal"
+                          serialized-type="types:Principal"
+                          xmlns:types="http://idoox.com/security"/>
+
+        <dd:serialization name="PermissionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PermissionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PermissionDeserializer"
+                          serialized-class="java.security.Permission"
+                          serialized-type="types:Permission"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="PermissionCollectionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PermissionCollectionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PermissionCollectionDeserializer"
+                          serialized-class="java.security.PermissionCollection"
+                          serialized-type="types:PermissionCollection"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="ReflectionSerializer"
+                          serializer-class="com.idoox.wasp.serialization.ReflectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.ReflectionDeserializer"
+                          preceding-parts="tns:BasicConstructSerializer" />
+
+    </dd:processing>
+
+    <!-- ApacheSerialization, equals to RPC/encoded (only due to backward compatibility) -->
+
+    <dd:processing name="ApacheSerialization">
+
+        <dd:use ref="tns:DefaultSchemas" />
+
+        <!-- IDOOX containers XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/serialization/javabuiltin/idooxContainers.xsd"
+                   namespaceURI="http://idoox.com/containers"/>
+
+        <dd:type-mapping name="IdooxContainersMapping"
+                         language="java"
+                         xmlns:types="http://idoox.com/containers"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Iterator" maps-to="java.util.Iterator"/>
+            <dd:type name="types:Enumeration" maps-to="java.util.Enumeration"/>
+            <dd:type name="types:List" maps-to="java.util.List"/>
+            <dd:type name="types:ArrayList" maps-to="java.util.ArrayList"/>
+            <dd:type name="types:LinkedList" maps-to="java.util.LinkedList"/>
+            <dd:type name="types:Set" maps-to="java.util.Set"/>
+            <dd:type name="types:HashSet" maps-to="java.util.HashSet"/>
+            <dd:type name="types:SortedSet" maps-to="java.util.SortedSet"/>
+            <dd:type name="types:TreeSet" maps-to="java.util.TreeSet"/>
+            <dd:type name="types:HashMap" maps-to="java.util.HashMap"/>
+            <dd:type name="types:SortedMap" maps-to="java.util.SortedMap"/>
+            <dd:type name="types:TreeMap" maps-to="java.util.TreeMap"/>
+        </dd:type-mapping>
+
+        <!-- Apache containers XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/serialization/javabuiltin/apacheContainers.xsd"
+                   namespaceURI="http://xml.apache.org/xml-soap"/>
+
+        <dd:type-mapping name="ApacheContainersMapping"
+                         language="java"
+                         xmlns:types="http://xml.apache.org/xml-soap"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Vector" maps-to="java.util.Vector"/>
+            <dd:type name="types:Hashtable" maps-to="java.util.Hashtable"/>
+            <dd:type name="types:Map" maps-to="java.util.Map"/>
+        </dd:type-mapping>
+
+        <!-- Security types XML Schema -->
+        <dd:schema location="resource:/com/idoox/wasp/security/securityEncoded.xsd"
+                   namespaceURI="http://idoox.com/security" />
+
+        <dd:type-mapping name="SecurityMapping"
+                         language="java"
+                         xmlns:types="http://idoox.com/security"
+                         following-parts="tns:DefaultSchemas">
+            <dd:type name="types:Key" maps-to="java.security.Key"/>
+            <dd:type name="types:Certificate" maps-to="java.security.cert.Certificate"/>
+            <dd:type name="types:Permission" maps-to="java.security.Permission"/>
+            <dd:type name="types:Principal" maps-to="java.security.Principal"/>
+            <dd:type name="types:PermissionCollection" maps-to="java.security.PermissionCollection"/>
+        </dd:type-mapping>
+
+        <dd:serialization name="SimpleSerializer"
+                          serializer-class="com.idoox.wasp.serialization.SimpleSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.SimpleDeserializer"
+                          following-parts="tns:BasicConstructSerializer" />
+
+        <dd:serialization name="BasicConstructSerializer"
+                          serializer-class="com.idoox.wasp.serialization.BasicConstructSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.BasicConstructDeserializer"
+                          following-parts="tns:ReflectionSerializer" />
+
+        <dd:serialization name="MessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.MessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="RequestMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.RequestMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="ResponseMessageAttachmentSerializer"
+                          serializer-class="com.idoox.wasp.serialization.attachments.AttachmentSerializer"
+                          serialized-class="org.idoox.wasp.types.ResponseMessageAttachment">
+            <mimeType xmlns="http://systinet.com/wasp/package/extension">application/octet-stream</mimeType>
+        </dd:serialization>
+
+        <dd:serialization name="ApacheElementSerializer"
+                          serializer-class="com.idoox.wasp.serialization.ElementSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.ElementDeserializer"
+                          serialized-class="org.w3c.dom.Node" />
+
+        <dd:serialization name="ApacheIteratorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.IteratorSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.IteratorDeserializer"
+                          serialized-type="types:Iterator"
+                          xmlns:types="http://idoox.com/containers"
+                          preceding-parts="tns:BasicConstructSerializer"
+                          following-parts="tns:ReflectionSerializer" />
+
+        <dd:serialization name="ApacheEnumerationSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.EnumerationSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.EnumerationDeserializer"
+                          serialized-type="types:Enumeration"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheHashtableSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.HashtableSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.HashtableDeserializer"
+                          serialized-type="types:Hashtable"
+                          xmlns:types="http://xml.apache.org/xml-soap" />
+
+        <dd:serialization name="ApacheTreeMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.TreeMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.TreeMapDeserializer"
+                          serialized-type="types:TreeMap"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheSortedMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.SortedMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.SortedMapDeserializer"
+                          serialized-type="types:SortedMap"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheHashMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.HashMapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.HashMapDeserializer"
+                          serialized-type="types:HashMap"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheMapSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.MapSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.MapDeserializer"
+                          serialized-type="types:Map"
+                          xmlns:types="http://xml.apache.org/xml-soap" />
+
+        <dd:serialization name="ApacheTreeSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.TreeSetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.TreeSetDeserializer"
+                          serialized-type="types:TreeSet"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheSortedSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.SortedSetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.SortedSetDeserializer"
+                          serialized-type="types:SortedSet"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheHashSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.HashSetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.HashSetDeserializer"
+                          serialized-type="types:HashSet"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheSetSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.SetSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.SetDeserializer"
+                          serialized-type="types:Set"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheVectorSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.VectorSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.VectorDeserializer"
+                          serialized-type="types:Vector"
+                          xmlns:types="http://xml.apache.org/xml-soap" />
+
+        <dd:serialization name="ApacheLinkedListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.LinkedListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.LinkedListDeserializer"
+                          serialized-type="types:LinkedList"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheArrayListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.ArrayListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.ArrayListDeserializer"
+                          serialized-type="types:ArrayList"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="ApacheListSerializer"
+                          serializer-class="com.idoox.wasp.serialization.javabuiltin.ListSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.javabuiltin.ListDeserializer"
+                          serialized-type="types:List"
+                          xmlns:types="http://idoox.com/containers" />
+
+        <dd:serialization name="DateSerializer"
+                          serializer-class="com.idoox.wasp.serialization.xsdbuiltin.DateSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.xsdbuiltin.DateDeserializer"
+                          serialized-class="java.util.Date" />
+
+        <dd:serialization name="KeySerializer"
+                          serializer-class="com.idoox.wasp.security.KeySerializer"
+                          deserializer-class="com.idoox.wasp.security.KeyDeserializer"
+                          serialized-class="java.security.Key"
+                          serialized-type="types:Key"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="CertificateSerializer"
+                          serializer-class="com.idoox.wasp.security.CertificateSerializer"
+                          deserializer-class="com.idoox.wasp.security.CertificateDeserializer"
+                          serialized-class="java.security.cert.Certificate"
+                          serialized-type="types:Certificate"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="InterrefSerializer"
+                          serializer-class="com.idoox.wasp.interrefs.InterrefSerializer"
+                          deserializer-class="com.idoox.wasp.interrefs.InterrefDeserializer"
+                          serialized-type="types:serviceReference"
+                          xmlns:types="http://idoox.com/interface" />
+
+        <dd:serialization name="PrincipalSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PrincipalSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PrincipalDeserializer"
+                          serialized-class="java.security.Principal"
+                          serialized-type="types:Principal"
+                          xmlns:types="http://idoox.com/security"/>
+
+        <dd:serialization name="PermissionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PermissionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PermissionDeserializer"
+                          serialized-class="java.security.Permission"
+                          serialized-type="types:Permission"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="PermissionCollectionSerializer"
+                          serializer-class="com.systinet.wasp.admin.security.serialization.PermissionCollectionSerializer"
+                          deserializer-class="com.systinet.wasp.admin.security.serialization.PermissionCollectionDeserializer"
+                          serialized-class="java.security.PermissionCollection"
+                          serialized-type="types:PermissionCollection"
+                          xmlns:types="http://idoox.com/security" />
+
+        <dd:serialization name="ReflectionSerializer"
+                          serializer-class="com.idoox.wasp.serialization.ReflectionSerializer"
+                          deserializer-class="com.idoox.wasp.serialization.ReflectionDeserializer"
+                          preceding-parts="tns:BasicConstructSerializer" />
+
+    </dd:processing>
+
+    <!-- DefaultSchemas, contains well known Schemata, default mapping between Java and XML Schema -->
+
+    <dd:processing name="DefaultSchemas">
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/2001-xml.xsd"
+                   namespaceURI="http://www.w3.org/XML/1998/namespace"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/2001.xsd"
+                   namespaceURI="http://www.w3.org/2001/XMLSchema"/>
+
+        <dd:type-mapping name="Schema2001"
+                         language="java"
+                         xmlns:types="http://www.w3.org/2001/XMLSchema">
+            <dd:type name="types:dateTime" maps-to="java.util.Date" />
+            <dd:type name="types:boolean" maps-to="boolean"/>
+            <dd:type name="types:boolean" maps-to="java.lang.Boolean"/>
+            <dd:type name="types:string" maps-to="java.lang.String"/>
+            <dd:type name="types:string" maps-to="char"/>
+            <dd:type name="types:string" maps-to="java.lang.Character"/>
+            <dd:type name="types:double" maps-to="double"/>
+            <dd:type name="types:double" maps-to="java.lang.Double"/>
+            <dd:type name="types:float" maps-to="float"/>
+            <dd:type name="types:float" maps-to="java.lang.Float"/>
+            <dd:type name="types:int" maps-to="int"/>
+            <dd:type name="types:int" maps-to="java.lang.Integer"/>
+            <dd:type name="types:char" maps-to="java.lang.String"/>
+            <dd:type name="types:short" maps-to="short"/>
+            <dd:type name="types:short" maps-to="java.lang.Short"/>
+            <dd:type name="types:long" maps-to="long"/>
+            <dd:type name="types:long" maps-to="java.lang.Long"/>
+            <dd:type name="types:byte" maps-to="byte"/>
+            <dd:type name="types:byte" maps-to="java.lang.Byte"/>
+            <dd:type name="types:base64Binary" maps-to="byte[]"/>
+            <dd:type name="types:decimal" maps-to="java.math.BigDecimal"/>
+            <dd:type name="types:integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:dateTime" maps-to="org.idoox.wasp.serialization.xsdbuiltin.DateTime"/>
+            <dd:type name="types:duration" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Duration"/>
+            <dd:type name="types:time" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Time"/>
+            <dd:type name="types:date" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Date"/>
+            <dd:type name="types:gYearMonth" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GYearMonth"/>
+            <dd:type name="types:gYear" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GYear"/>
+            <dd:type name="types:gMonthDay" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GMonthDay"/>
+            <dd:type name="types:gDay" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GDay"/>
+            <dd:type name="types:gMonth" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GMonth"/>
+            <dd:type name="types:anyURI" maps-to="java.lang.String"/>
+            <dd:type name="types:QName" maps-to="javax.xml.namespace.QName"/>
+            <dd:type name="types:NOTATION" maps-to="java.lang.String"/>
+            <dd:type name="types:hexBinary" maps-to="org.idoox.wasp.serialization.xsdbuiltin.HexBinary"/>
+            <dd:type name="types:normalizedString" maps-to="org.idoox.wasp.serialization.xsdbuiltin.NormalizedString"/>
+            <dd:type name="types:token" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Token"/>
+            <dd:type name="types:ENTITIES" maps-to="java.lang.String"/>
+            <dd:type name="types:ENTITY" maps-to="java.lang.String"/>
+            <dd:type name="types:ID" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREF" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREFS" maps-to="java.lang.String"/>
+            <dd:type name="types:NCName" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKEN" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKENS" maps-to="java.lang.String"/>
+            <dd:type name="types:Name" maps-to="java.lang.String"/>
+            <dd:type name="types:language" maps-to="java.lang.String"/>
+            <dd:type name="types:negativeInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:nonNegativeInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:nonPositiveInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:positiveInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:unsignedByte" maps-to="java.lang.Short"/>
+            <dd:type name="types:unsignedInt" maps-to="java.lang.Long"/>
+            <dd:type name="types:unsignedLong" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:unsignedShort" maps-to="java.lang.Integer"/>
+            <dd:type name="types:anyType" maps-to="java.lang.Object"/>
+            <dd:type name="types:anySimpleType" maps-to="java.lang.Object"/>
+        </dd:type-mapping>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/200010.xsd"
+                   namespaceURI="http://www.w3.org/2000/10/XMLSchema"/>
+
+        <dd:type-mapping name="Schema200010"
+                         language="java"
+                         xmlns:types="http://www.w3.org/2000/10/XMLSchema">
+            <dd:type name="types:boolean" maps-to="boolean"/>
+            <dd:type name="types:boolean" maps-to="java.lang.Boolean"/>
+            <dd:type name="types:string" maps-to="java.lang.String"/>
+            <dd:type name="types:string" maps-to="char"/>
+            <dd:type name="types:string" maps-to="java.lang.Character"/>
+            <dd:type name="types:double" maps-to="double"/>
+            <dd:type name="types:double" maps-to="java.lang.Double"/>
+            <dd:type name="types:float" maps-to="float"/>
+            <dd:type name="types:float" maps-to="java.lang.Float"/>
+            <dd:type name="types:timeInstant" maps-to="java.lang.String"/>
+            <dd:type name="types:int" maps-to="int"/>
+            <dd:type name="types:int" maps-to="java.lang.Integer"/>
+            <dd:type name="types:long" maps-to="long"/>
+            <dd:type name="types:long" maps-to="java.lang.Long"/>
+            <dd:type name="types:byte" maps-to="byte"/>
+            <dd:type name="types:byte" maps-to="java.lang.Byte"/>
+            <dd:type name="types:binary" maps-to="byte[]"/>
+            <dd:type name="types:decimal" maps-to="java.math.BigDecimal"/>
+            <dd:type name="types:short" maps-to="short"/>
+            <dd:type name="types:short" maps-to="java.lang.Short"/>
+            <dd:type name="types:timeDuration" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Duration"/>
+            <dd:type name="types:uriReference" maps-to="java.lang.String"/>
+            <dd:type name="types:ID" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREF" maps-to="java.lang.String"/>
+            <dd:type name="types:ENTITY" maps-to="java.lang.String"/>
+            <dd:type name="types:QName" maps-to="javax.xml.namespace.QName"/>
+            <dd:type name="types:CDATA" maps-to="java.lang.String"/>
+            <dd:type name="types:token" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Token"/>
+            <dd:type name="types:language" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREFS" maps-to="java.lang.String"/>
+            <dd:type name="types:ENTITIES" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKEN" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKENS" maps-to="java.lang.String"/>
+            <dd:type name="types:Name" maps-to="java.lang.String"/>
+            <dd:type name="types:NCName" maps-to="java.lang.String"/>
+            <dd:type name="types:NOTATION" maps-to="java.lang.String"/>
+            <dd:type name="types:integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:nonPositiveInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:negativeInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:nonNegativeInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:unsignedLong" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:unsignedInt" maps-to="java.lang.Long"/>
+            <dd:type name="types:unsignedShort" maps-to="java.lang.Integer"/>
+            <dd:type name="types:unsignedByte" maps-to="java.lang.Short"/>
+            <dd:type name="types:positiveInteger" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:time" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Time"/>
+            <dd:type name="types:date" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Date"/>
+            <dd:type name="types:month" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GMonth"/>
+            <dd:type name="types:year" maps-to="org.idoox.wasp.serialization.xsdbuiltin.GYear"/>
+            <dd:type name="types:anyType" maps-to="java.lang.Object"/>
+            <dd:type name="types:anySimpleType" maps-to="java.lang.Object"/>
+        </dd:type-mapping>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/1999.xsd"
+                   namespaceURI="http://www.w3.org/1999/XMLSchema"/>
+
+        <dd:type-mapping name="Schema1999"
+                         language="java"
+                         xmlns:types="http://www.w3.org/1999/XMLSchema">
+            <dd:type name="types:boolean" maps-to="boolean"/>
+            <dd:type name="types:boolean" maps-to="java.lang.Boolean"/>
+            <dd:type name="types:string" maps-to="java.lang.String"/>
+            <dd:type name="types:string" maps-to="char"/>
+            <dd:type name="types:string" maps-to="java.lang.Character"/>
+            <dd:type name="types:double" maps-to="double"/>
+            <dd:type name="types:double" maps-to="java.lang.Double"/>
+            <dd:type name="types:float" maps-to="float"/>
+            <dd:type name="types:float" maps-to="java.lang.Float"/>
+            <dd:type name="types:timeInstant" maps-to="java.lang.String"/>
+            <dd:type name="types:int" maps-to="int"/>
+            <dd:type name="types:int" maps-to="java.lang.Integer"/>
+            <dd:type name="types:long" maps-to="long"/>
+            <dd:type name="types:long" maps-to="java.lang.Long"/>
+            <dd:type name="types:byte" maps-to="byte"/>
+            <dd:type name="types:byte" maps-to="java.lang.Byte"/>
+            <dd:type name="types:binary" maps-to="byte[]"/>
+            <dd:type name="types:decimal" maps-to="java.math.BigDecimal"/>
+            <dd:type name="types:short" maps-to="short"/>
+            <dd:type name="types:short" maps-to="java.lang.Short"/>
+            <dd:type name="types:timeDuration" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Duration"/>
+            <dd:type name="types:uri" maps-to="java.lang.String"/>
+            <dd:type name="types:language" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKEN" maps-to="java.lang.String"/>
+            <dd:type name="types:NMTOKENS" maps-to="java.lang.String"/>
+            <dd:type name="types:Name" maps-to="java.lang.String"/>
+            <dd:type name="types:QName" maps-to="javax.xml.namespace.QName"/>
+            <dd:type name="types:NCName" maps-to="java.lang.String"/>
+            <dd:type name="types:ID" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREF" maps-to="java.lang.String"/>
+            <dd:type name="types:IDREFS" maps-to="java.lang.String"/>
+            <dd:type name="types:ENTITY" maps-to="java.lang.String"/>
+            <dd:type name="types:ENTITIES" maps-to="java.lang.String"/>
+            <dd:type name="types:NOTATION" maps-to="java.lang.String"/>
+            <dd:type name="types:integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:non-negative-integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:positive-integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:non-positive-integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:negative-integer" maps-to="java.math.BigInteger"/>
+            <dd:type name="types:date" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Date"/>
+            <dd:type name="types:time" maps-to="org.idoox.wasp.serialization.xsdbuiltin.Time"/>
+            <dd:type name="types:anyType" maps-to="java.lang.Object"/>
+            <dd:type name="types:anySimpleType" maps-to="java.lang.Object"/>
+            <dd:type name="types:simpleType" maps-to="java.lang.Object"/>
+            <dd:type name="types:urType" maps-to="java.lang.Object"/>
+        </dd:type-mapping>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/200010-xml.xsd"
+                   namespaceURI="http://www.w3.org/2000/10/xml.xsd"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/200004-xml.xsd"
+                namespaceURI="http://www.w3.org/2000/04/xml.xsd"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/soapenc.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+        <dd:type-mapping name="SoapEncoding"
+                         language="java"
+                         xmlns:types="http://schemas.xmlsoap.org/soap/encoding/">
+            <dd:type name="types:base64" maps-to="byte[]"/>
+        </dd:type-mapping>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/soapenc12.xsd"
+                   namespaceURI="http://www.w3.org/2003/05/soap-encoding"/>
+
+        <dd:type-mapping name="SoapEncoding12"
+                         language="java"
+                         xmlns:types="http://www.w3.org/2003/05/soap-encoding">
+            <dd:type name="types:base64" maps-to="byte[]"/>
+        </dd:type-mapping>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/soap.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/wsdl/soap/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/httpBindingSchema.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/wsdl/http/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/mimeBindingSchema.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/wsdl/mime/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/soapenv.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/soap/envelope/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/wsdlSchema.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/wsdl/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/2001-xml.xsd"
+                   namespaceURI="http://www.w3.org/2001/xml.xsd"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/content-type.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/ws/2002/04/content-type/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/reference.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/ws/2002/04/reference/"/>
+
+        <dd:schema location="resource:/com/idoox/xml/schema/known_schemas/ws-routing.xsd"
+                   namespaceURI="http://schemas.xmlsoap.org/rp/"/>
+
+    </dd:processing>
+
+    <!-- Exports definitions -->
+
+    <dd:export push="false">
+        <!-- document/literal serialization -->
+        <dd:use ref="tns:XmlSerialization" />
+        <!-- RPC/encoded serialization (including .NET and Axis compatible containers) -->
+        <dd:use ref="tns:EncodedSerialization" />
+        <!-- RPC/encoded serialization (including Axis compatible containers, only) - FOR BACWARD COMPATIBILTY REASONS -->
+        <dd:use ref="tns:ApacheSerialization" />
+        <!-- Java/XML Schema mapping, user should never refer to the processing directly -->
+        <dd:use ref="tns:DefaultSchemas" />
+    </dd:export>
+
+</dd:package>
